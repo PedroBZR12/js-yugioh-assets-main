@@ -99,7 +99,11 @@ async function drawButton(text){
     state.button.style.display = "block";
 }
 
-
+async function updateScore(){
+    state.score.playerScore = playerScore;
+    state.score.computerScore = computerScore;
+    state.score.scoreBox.innerText = `Jogador: ${state.score.playerScore} - Computador: ${state.score.computerScore}`;
+}
 
 async function checkDuelResults(){
     let duelResult = "Empate";
@@ -140,6 +144,16 @@ async function drawCards(cardNumbers, fieldSide){
         const cardImage = await createCardImage(randomIdCard, fieldSide);
         document.getElementById(fieldSide).appendChild(cardImage);
     }
+}
+
+async function resetDuel(){
+    state.cardSprites.avatar.src = "";
+    state.button.style.display = "none";
+
+    state.fieldCards.player.style.display = "none";
+    state.fieldCards.computer.style.display = "none";
+
+    init();
 }
 
 
