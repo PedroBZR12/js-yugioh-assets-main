@@ -37,6 +37,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    display: flex;
 }
 
 .container__right{
@@ -118,4 +119,13 @@
     width: 8rem;
     border: 1px solid #fff;
     border-radius: 8px;
+}
+
+
+.card{
+    transition: transform 0.2s;
+}
+
+.card:hover{
+    transform: scale(1.2);
 }
