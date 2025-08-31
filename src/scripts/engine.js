@@ -100,35 +100,35 @@ async function drawButton(text){
 }
 
 async function updateScore(){
-    state.score.playerScore = playerScore;
-    state.score.computerScore = computerScore;
-    state.score.scoreBox.innerText = `Jogador: ${state.score.playerScore} - Computador: ${state.score.computerScore}`;
+    state.score.scoreBox.innerText = `Win: ${state.score.playerScore} - Computador: ${state.score.computerScore}`;
 }
 
-async function checkDuelResults(){
+async function checkDuelResults(IdCard, computerCardId){
     let duelResult = "Empate";
     let playerCard = cardData[IdCard];
     let computerCard = cardData[computerCardId];
 
     if (playerCard.WinOf.includes(computerCardId)) {
         duelResult = "Ganhou";
-        playerScore++;
+        await playAudio("win");
+        state.score.playerScore++;
     } else if (playerCard.LoseOf.includes(computerCardId)) {
         duelResult = "Perdeu";
-        computerScore++;
+        await playAudio("lose");
+        state.score.computerScore++;
     }
 
     return duelResult;
 }
 
 async function removeAllCardsImages() {
-    let cards = document.querySelectorAll("#computer-cards");
+    let cards = document.querySelector("#computer-cards");
     let imgElements = cards.querySelectorAll("img");
-    imgElements.forEach(img => img.remove());
+    imgElements.forEach((img) => img.remove());
 
-    cards = document.querySelectorAll("#player-cards");
+    cards = document.querySelector("#player-cards");
     imgElements = cards.querySelectorAll("img");
-    imgElements.forEach(img => img.remove());
+    imgElements.forEach((img) => img.remove());
 }
 
 async function drawSelectCard(IdCard){
@@ -156,10 +156,18 @@ async function resetDuel(){
     init();
 }
 
+async function playAudio(status){
+   const audio = new Audio(`src/assets/audios/${status}.wav`);
+   audio.play();
+}
+
 
 function init(){
     drawCards(5, playerSides.player1);
     drawCards(5, playerSides.computer);
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.1;
+    bgm.play();
 }
 
 
